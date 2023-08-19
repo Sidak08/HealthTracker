@@ -1,12 +1,64 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
 #homePage {
   height: 100vh;
   width: 100%;
   background-color: black;
 }
-h1 {
-  z-index: 4;
-  color: aliceblue;
-  position: fixed;
-  top: 0;
-  right: 0;
+#graph {
+  height: 52vh;
+  width: 100%;
+}
+#stats {
+  display: flex;
+  flex-direction: column;
+}
+.div {
+  display: flex;
+  width: 100%;
+}
+
+#macros {
+  display: flex;
+  width: 100%;
+}
+.boxArrang {
+  width: 50%;
+}
+.box {
+  height: 85px;
+  margin: 17px;
+  width: 50%;
+  background-color: rgb(009, 009, 009);
+  border-radius: 15px;
+  border: 2px rgb(100, 204, 197) solid;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.text {
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 40%;
+}
+h4 {
+  font-size: 0.7rem;
+  color: rgb(218, 255, 251);
+}
+.statsIcon {
+  height: 30px;
+  width: 30px;
+  border: 1px rgb(218, 255, 251) solid;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+h3 {
+  color: rgb(218, 255, 251);
 }

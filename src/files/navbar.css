@@ -53,6 +53,7 @@
 }
 .link {
   color: rgb(218, 255, 251);
+  padding-top: 5px;
 }
 .sides ul li img {
   height: 30px;

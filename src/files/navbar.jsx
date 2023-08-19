@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import "./navbar.css"
-import navbarDesignSvg from "../assets/vector 1.svg"
-import home from "../assets/Home.png"
-import food from "../assets/Food.png"
-import workout from "../assets/Workout.png"
-import you from "../assets/Profile.png"
+import navbarDesignSvg from "../assets/navbar/navbarLine.svg"
+import home from "../assets/navBar/Home.svg"
+import food from "../assets/navBar/Food.svg"
+import workout from "../assets/navBar/Work.svg"
+import you from "../assets/navBar/you.svg"
 
 function Navbar() {
     return (

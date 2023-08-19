@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import mainImg from "../assets/Untitled design-3.png"
-import user from "../assets/user-2.png"
-import padlock from "../assets/padlock-2.png"
-import apple from "../assets/appleLogo.png"
-import google from "../assets/googleLogo.png"
+import mainImg from "../assets/login/backgroundImg.png"
+import user from "../assets/navbar/you.svg"
+import padlock from "../assets/login/padlock-2.png"
+import apple from "../assets/login/appleLogo.png"
+import google from "../assets/login/googleLogo.png"
 import './Login.css'
 
 let heading = "Track and Analyse Your Fitness"

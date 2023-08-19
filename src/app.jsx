@@ -8,8 +8,8 @@ import HomePage from "./files/homepage"
 function App() {
     return <BrowserRouter>
         <Routes>
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/" element={<HomePage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<HomePage />} />
         </Routes>
     </BrowserRouter>
 
