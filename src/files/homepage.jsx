@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Navbar from "./navbar"
 import "./homepage.css"
+import "./navbar.css"
 import waterIcon from "../assets/stats/glass-2.png"
 import thunder from "../assets/stats/vector 4.png"
 import sleepIcon from "../assets/stats/zzz-sleep-symbol.png"

@@ -12,7 +12,7 @@
   bottom: 0;
   display: flex;
   justify-content: space-between;
-  background-color: rgb(9, 9, 9);
+  background-color: (9, 53, 85);
 }
 #navBarSvg {
   position: absolute;
@@ -61,4 +61,10 @@
 }
 #sidesLeft {
   padding-right: 50px;
+}
+.foodSVGColour {
+  fill: black !important;
+}
+#youSVGColorIcon {
+  fill: #164b60 !important;
 }
