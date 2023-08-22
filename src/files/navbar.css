@@ -24,16 +24,16 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  bottom: 60px;
+  bottom: 55px;
 }
 #add {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background-color: rgb(100, 204, 197);
   color: rgb(218, 255, 251);
   font-size: 2rem;
-  border: none;
+  border: 3px var(--border-2-dark) solid;
 }
 .sides {
   margin-top: 20px;
@@ -61,10 +61,4 @@
 }
 #sidesLeft {
   padding-right: 50px;
-}
-.foodSVGColour {
-  fill: black !important;
-}
-#youSVGColorIcon {
-  fill: #164b60 !important;
 }
