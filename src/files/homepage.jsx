@@ -198,7 +198,6 @@ const Greeting = () => {
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
     let greeting = today.getHours < 12 ? "morning" : (today.getHours < 18 ? "afternoon" : "evening");
-    console.log(greeting)
 
     function getWeekday(dateStr) {
         const dateObj = new Date(dateStr);
@@ -206,14 +205,12 @@ const Greeting = () => {
         return daysOfWeek[weekdayIndex];
     }
     const weekday = getWeekday(date.toString());
-    // console.log(months[today.getMonth()]) how to get the month
 
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
             function (position) {
                 latitude = position.coords.latitude;
                 longitude = position.coords.longitude;
-                console.log("Latitude: " + latitude + ", Longitude: " + longitude);
                 weatherReport()
             },
             function (error) {
@@ -231,7 +228,6 @@ const Greeting = () => {
             .then((Data) => {
                 weatherData = Data
                 useWeather(`https:${weatherData.current.condition.icon}`)
-                console.log((weatherData.current.condition.icon.substring(2)))
             })
             .catch((err) => { console.log(err) })
     }
@@ -240,9 +236,9 @@ const Greeting = () => {
 
     return (
 
-        <div>
+        <div id='greeting'>
             <h1>{`Good ${greeting}, ${name} ${greetingEmojis}`}</h1>
-            <div id='subHeading'> <img src={weather} alt="" srcset="" /> <h2>{today.getDate()}</h2>{months[today.getMonth()]}<h2></h2></div>
+            <div id='subHeading'> <img src={weather} alt="weatherData" srcSet="" /> <h2>{` ${today.getDate()} ${months[today.getMonth()]}`}</h2></div>
         </div>
     )
 

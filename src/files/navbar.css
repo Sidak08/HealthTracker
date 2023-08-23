@@ -33,7 +33,7 @@
   background-color: rgb(100, 204, 197);
   color: rgb(218, 255, 251);
   font-size: 2rem;
-  border: 3px var(--border-2-dark) solid;
+  border: none;
 }
 .sides {
   margin-top: 20px;
