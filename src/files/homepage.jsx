@@ -8,25 +8,54 @@ import waterIcon from "../assets/stats/glass-2.png"
 import thunder from "../assets/stats/vector 4.png"
 import sleepIcon from "../assets/stats/zzz-sleep-symbol.png"
 import fire from "../assets/stats/icons8-fire-50-2.png"
+import weatherAPI from "./secret.jsx"
+import axios from 'axios';
+import sun from "../assets/weatherIcon/Group 1-2.svg"
+
+let weatherData = {}
+
+let longitude = ""
+let latitude = ""
+
+const weatherUrl = `http://api.weatherapi.com/v1/current.json?key=${weatherAPI}&q=${latitude},${longitude}&aqi=yes`;
+
+const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+];
+
+const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+const emojis = ["👋", "🌞", "🙌", "👍", "🎉", "😊", "👋🏼", "😃", "🤗", "✨"];
+
+const greetingEmojis = emojis[Math.floor(Math.random() * emojis.length)]
+
+let name = "John"
 
 const initialData = {
-    labels: [
-        "workout",
-        "sleep",
-        "water",
-        "food"
-    ],
-    datasets: [{
-        label: 'My First Dataset',
-        data: [65, 59, 90, 81],
-        fill: true,
-    }]
+    labels: ['Macros', 'Calories', 'Water', "Sleep"],
+    datasets: [
+        {
+            label: 'Today',
+            data: [1, 5, 3, 4],
+            backgroundColor: 'rgba(23, 107, 135, 0)',
+            borderColor: "rgb(23, 107, 135)",
+        }, {
+            label: 'Yesterday',
+            data: [3, 1, 2, 7],
+            backgroundColor: 'rgba(218, 255, 251, 0)',
+            borderColor: "rgb(218, 255, 251)",
+        }
+    ]
 };
+
+
 
 
 function HomePage() {
     return (
         <div id='homePage'>
+            <Greeting />
             <Graph />
             <Stats protein={14} fat={15} suger={34} calories={1300} sleep={10} water={500} />
             <Navbar />
@@ -107,10 +136,34 @@ function Graph() {
             options: {
                 elements: {
                     line: {
-                        borderWidth: 3
+                        borderWidth: 2.5
                     }
-                },
-            },
+                }, scales: {
+                    r: {
+                        grid: {
+                            color: 'rgb(100, 204, 197)',
+                            // circular: true,
+                            lineWidth: 1.5,
+                        },
+                        ticks: {
+                            color: "rgba(0, 0, 0, 0)",
+                            backdropColor: 'rgba(0, 0, 0, 0)',
+                            stepSize: 1,
+                            count: 8,
+                            drawTicks: false,
+                        }, pointLabels: {
+                            color: 'rgb(218, 255, 251)',
+                            font: {
+                                size: 14
+                            },
+                        }, title: {
+                            display: false,
+
+                        }
+                    },
+                }
+            }
+
         });
 
         setChartInstance(newChartInstance); // Store the new chart instance
@@ -132,7 +185,7 @@ function Graph() {
 
     return (
         <>
-            <div>
+            <div id='graphDiv'>
                 <canvas id='graph' ref={canvasRef}></canvas>
             </div>
             {/* <button onClick={upDateGraph}>Click</button> */}
@@ -140,4 +193,61 @@ function Graph() {
     );
 }
 
+const Greeting = () => {
+    let today = new Date();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
+    let greeting = today.getHours < 12 ? "morning" : (today.getHours < 18 ? "afternoon" : "evening");
+    console.log(greeting)
+
+    function getWeekday(dateStr) {
+        const dateObj = new Date(dateStr);
+        const weekdayIndex = dateObj.getDay();
+        return daysOfWeek[weekdayIndex];
+    }
+    const weekday = getWeekday(date.toString());
+    // console.log(months[today.getMonth()]) how to get the month
+
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                latitude = position.coords.latitude;
+                longitude = position.coords.longitude;
+                console.log("Latitude: " + latitude + ", Longitude: " + longitude);
+                weatherReport()
+            },
+            function (error) {
+                console.error("Error getting location:", error);
+                // program from an error svg
+            }
+        );
+    } else {
+        console.log("Geolocation is not available.");
+    }
+
+    const weatherReport = () => {
+        fetch("http://api.weatherapi.com/v1/current.json?key=b999e6d992fd4574a81202635232208&q=43.6851491,-79.8468381&aqi=yes")
+            .then((res) => res.json())
+            .then((Data) => {
+                weatherData = Data
+                useWeather(`https:${weatherData.current.condition.icon}`)
+                console.log((weatherData.current.condition.icon.substring(2)))
+            })
+            .catch((err) => { console.log(err) })
+    }
+
+    const [weather, useWeather] = useState(sun)
+
+    return (
+
+        <div>
+            <h1>{`Good ${greeting}, ${name} ${greetingEmojis}`}</h1>
+            <div id='subHeading'> <img src={weather} alt="" srcset="" /> <h2>{today.getDate()}</h2>{months[today.getMonth()]}<h2></h2></div>
+        </div>
+    )
+
+
+}
+
 export default HomePage
+
