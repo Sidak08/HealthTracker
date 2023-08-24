@@ -11,7 +11,7 @@ import fire from "../assets/stats/icons8-fire-50-2.png"
 import weatherAPI from "./secret.jsx"
 import axios from 'axios';
 import sun from "../assets/weatherIcon/Group 1-2.svg"
-import Svg from "./test"
+
 
 let weatherData = {}
 

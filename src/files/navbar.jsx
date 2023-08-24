@@ -7,22 +7,26 @@ import home from "../assets/navBar/Home.svg"
 import food from "../assets/navBar/Food.svg"
 import workout from "../assets/navBar/Work.svg"
 import you from "../assets/navBar/you.svg"
+import { FoodSvg, HomeSvg, NavbarLineSvg, WorkoutSvg, YouSvg } from "./Svg"
+
 
 function Navbar() {
     return (
         <div id='navbar'>
-            <img src={navbarDesignSvg} alt="" srcSet="" id='navBarSvg' />
+            <div id='navBarSvgDiv'>
+                <NavbarLineSvg id="navBarSvg" />
+            </div>
             <div id='addDiv'>
                 <button id='add'>+</button>
             </div>
             <div className='sides' id='sidesLeft'>
                 <ul>
                     <li>
-                        <img src={home} alt="" />
+                        <HomeSvg />
                         <Link to="/" className='link'>Home</Link>
                     </li>
                     <li>
-                        <img src={food} alt="" />
+                        <FoodSvg />
                         <Link to="/food" className='link'>Food</Link>
                     </li>
                 </ul>
@@ -30,11 +34,11 @@ function Navbar() {
             <div className='sides' id='sidesRight'>
                 <ul>
                     <li>
-                        <img src={workout} alt="" />
+                        <WorkoutSvg />
                         <Link to="/workout" className='link'>Workout</Link>
                     </li>
                     <li>
-                        <img src={you} alt="" />
+                        <YouSvg />
                         <Link to="/you" className='link'>You</Link>
                     </li>
                 </ul>

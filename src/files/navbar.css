@@ -18,6 +18,10 @@
   position: absolute;
   width: 100%;
 }
+#navBarSvgDiv {
+  position: absolute;
+  height: 300px;
+}
 #addDiv {
   position: fixed;
   width: 100%;
@@ -59,6 +63,11 @@
   height: 30px;
   width: 30px;
 }
+.svg {
+  height: 30px !important;
+  width: 30px;
+}
+
 #sidesLeft {
   padding-right: 50px;
 }
