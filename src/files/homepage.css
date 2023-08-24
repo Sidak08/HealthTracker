@@ -84,14 +84,14 @@ h1 {
   justify-content: flex-start;
   align-items: flex-end;
   color: #64ccc5;
-  padding-top: 10px;
-  font-size: 18px;
+  padding-top: 8px;
+  font-size: 17px;
 }
 
 #subHeading img {
-  height: 50px;
+  height: 47px;
   width: 50px;
-  margin-right: 15px;
+  margin-right: 11px;
 }
 
 #subHeading h2 {
