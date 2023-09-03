@@ -38,14 +38,14 @@ const initialData = {
     datasets: [
         {
             label: 'Today',
-            data: [1, 5, 3, 4],
-            backgroundColor: 'rgba(23, 107, 135, 0)',
-            borderColor: "rgb(23, 107, 135)",
+            data: [1, 4, 6, 3],
+            backgroundColor: 'rgba(16, 227, 157, 0.3)',
+            borderColor: "rgb(16, 227, 157)",
         }, {
             label: 'Yesterday',
-            data: [3, 1, 2, 7],
-            backgroundColor: 'rgba(218, 255, 251, 0)',
-            borderColor: "rgb(218, 255, 251)",
+            data: [5, 2, 3, 7],
+            backgroundColor: "rgba(16, 213, 227 0.3)",
+            borderColor: "rgb(16, 213, 227)",
         }
     ]
 };
@@ -118,7 +118,6 @@ function Stats({ protein, fat, suger, calories, sleep, water }) {
 
 }
 
-
 function Graph() {
     const canvasRef = useRef(null);
     const [data, setData] = useState(initialData);
@@ -143,7 +142,7 @@ function Graph() {
                 }, scales: {
                     r: {
                         grid: {
-                            color: 'rgb(100, 204, 197)',
+                            color: 'rgb(227, 16, 83)',
                             // circular: true,
                             lineWidth: 1.5,
                         },
@@ -249,4 +248,4 @@ const Greeting = () => {
 
 export default HomePage
 
-//make the entire colour schme editable
+

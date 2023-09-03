@@ -1,5 +1,5 @@
 :root {
-  --background-color: #001c30;
+  --background-color: #ecf8fd;
   --box-color: #164b60;
   --border-1-light: #dafffb;
   --border-2-dark: #1b6b93;
@@ -9,17 +9,23 @@
   margin: 0px;
 }
 #homePage {
-  height: 100vh;
   width: 100%;
-  background-color: var(--background-color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-image: linear-gradient(
+    0deg,
+    hsl(287deg 66% 32%) -1%,
+    hsl(285deg 100% 19%) 11%,
+    hsl(0deg 0% 0%) 100%
+  );
+  transition: background-image 0.5s ease;
 }
 #graphDiv {
   display: flex;
   justify-content: center;
   width: 100%;
+  height: 55vh;
 }
 
 #stats {
@@ -39,25 +45,30 @@
 .boxArrang {
   width: 50%;
 }
+
 .box {
   margin: 7px;
   width: 50%;
-  background-color: var(--box-color);
+  background-color: #9185855f;
+  backdrop-filter: blur(58px);
+  -webkit-backdrop-filter: blur(58px);
   border-radius: 15px;
-  border: 2px var(--border-2-dark) solid;
+  border: 2px black solid;
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
   align-items: center;
   padding: 10px;
+  height: 50px;
+  overflow-y: hidden;
 }
 .text {
-  font-size: 0.8rem;
+  font-size: 1rem;
   display: flex;
   flex-direction: column;
 }
 h4 {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: rgb(218, 255, 251);
 }
 .statsIcon {
@@ -96,4 +107,25 @@ h1 {
 
 #subHeading h2 {
   margin-bottom: 8px;
+  background: linear-gradient(
+    to right,
+    #ff5733,
+    #00a6fb
+  ); /* Adjust the colors as needed */
+  -webkit-background-clip: text; /* This property is used for WebKit-based browsers */
+  color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent; /* This is important for Firefox */
+}
+
+/* Optional: Hide scrollbar buttons and track */
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
 }

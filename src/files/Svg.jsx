@@ -1,10 +1,7 @@
 import React from 'react';
-let color = "#A2FF86"
-let height = 30
-let width = 30
 import "./test.css"
 
-const FoodSvg = () => {
+const FoodSvg = ({ width, height, color }) => {
     return (
         <svg width={width} height={height} viewBox="0 0 126 138" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_7_8)">
@@ -28,7 +25,7 @@ const FoodSvg = () => {
     );
 }
 
-const HomeSvg = () => {
+const HomeSvg = ({ width, height, color }) => {
     return (
         <svg width={width} height={width} viewBox="0 0 120 118" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_7_26)">
@@ -43,9 +40,9 @@ const HomeSvg = () => {
     );
 }
 
-const NavbarLineSvg = () => {
+const NavbarLineSvg = ({ width, height, color }) => {
     return (
-        <svg width="100%" height="80" viewBox="0 0 421 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width={width} height={height} viewBox="0 0 421 51" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d_1_3)">
                 <path d="M416.5 17.5L260.705 2C209.082 53.4911 214.2 57.1443 159.5 2L5 13.5" stroke={color} strokeWidth="2" />
             </g>
@@ -65,7 +62,8 @@ const NavbarLineSvg = () => {
     );
 }
 
-const WorkoutSvg = () => {
+
+const WorkoutSvg = ({ width, height, color }) => {
     return (
         <svg width={width} height={height} viewBox="0 0 119 116" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_7_2)">
@@ -82,7 +80,7 @@ const WorkoutSvg = () => {
     );
 }
 
-const YouSvg = () => {
+const YouSvg = ({ width, height, color }) => {
     return (
         <svg width={width} height={height} viewBox="0 0 134 134" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" clipRule="evenodd" id="youSVGColorIcon" d="M11 67C11 80.0925 15.4929 92.1356 23.0211 101.672C51.1818 87.6433 83.0398 87.2772 111.328 101.225C118.646 91.7605 123 79.8888 123 67C123 36.0721 97.9279 11 67 11C36.072 11 11 36.0721 11 67ZM31.1214 109.999C54.3972 99.4623 80.0549 99.2168 103.329 109.618C93.5497 117.963 80.8631 123 67 123C53.3488 123 40.8384 118.115 31.1214 109.999ZM134 67C134 104.003 104.003 134 67 134C29.9969 134 -2.03519e-05 104.003 -2.03519e-05 67C-2.03519e-05 29.9969 29.9969 0 67 0C104.003 0 134 29.9969 134 67ZM84.7242 53.1379C84.7242 61.6507 77.8232 68.5517 69.3104 68.5517C60.7976 68.5517 53.8966 61.6507 53.8966 53.1379C53.8966 44.6251 60.7976 37.7241 69.3104 37.7241C77.8232 37.7241 84.7242 44.6251 84.7242 53.1379ZM94.7242 53.1379C94.7242 67.1736 83.346 78.5517 69.3104 78.5517C55.2747 78.5517 43.8966 67.1736 43.8966 53.1379C43.8966 39.1023 55.2747 27.7241 69.3104 27.7241C83.346 27.7241 94.7242 39.1023 94.7242 53.1379Z" fill={color} />
