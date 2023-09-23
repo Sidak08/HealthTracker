@@ -13,9 +13,6 @@ let color = "#DAFFFB"
 function Navbar() {
     return (
         <div id='navbar'>
-            <div id='addDiv'>
-                <button id='add'>+</button>
-            </div>
             <div className='sides' id='sidesLeft'>
                 <ul>
                     <li id='home'>
@@ -34,6 +31,7 @@ function Navbar() {
                     </li>
                 </ul>
             </div>
+            <button id='add'>+</button>
             <div className='sides' id='sidesRight'>
                 <ul>
                     <li id='workout'>

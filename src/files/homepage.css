@@ -5,14 +5,11 @@
   --border-2-dark: #1b6b93;
 }
 * {
-  padding: 0px;
-  margin: 0px;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
-#homePage {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+body {
   background-image: linear-gradient(
     0deg,
     hsl(287deg 66% 32%) -1%,
@@ -20,6 +17,126 @@
     hsl(0deg 0% 0%) 100%
   );
   transition: background-image 0.5s ease;
+  background-repeat: no-repeat;
+}
+#homePage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+}
+#greeting {
+  margin: 30px;
+}
+h1 {
+  color: rgb(218, 255, 251);
+}
+#subHeading {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  color: #64ccc5;
+  padding-top: 8px;
+  font-size: 17px;
+}
+#subHeading img {
+  height: 47px;
+  width: 50px;
+  margin-right: 11px;
+}
+#subHeading h2 {
+  margin-bottom: 8px;
+  background: linear-gradient(to right, #10b9e3, #10e3ab);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+#todaySlider {
+  width: 100%;
+}
+#slides {
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+#slides::-webkit-scrollbar {
+  display: none;
+}
+.slide {
+  margin: 0 10px;
+  background-color: #ffffff20;
+  backdrop-filter: blur(48px);
+  -webkit-backdrop-filter: blur(48px);
+  scroll-snap-align: center;
+  border-radius: 15px;
+  margin-bottom: 11px;
+  min-width: 360px;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+}
+.arrow {
+  cursor: pointer;
+  width: 200px;
+  height: 280px;
+  border-radius: 15px;
+  background-color: #00000054;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
+  color: antiquewhite;
+  font-size: 32px;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#arrowSlides {
+  display: flex;
+}
+@media screen and (max-width: 768px) {
+  .arrow {
+    display: none;
+  }
+}
+#movementDiv {
+  display: flex;
+  justify-content: center;
+}
+.moveButton {
+  margin: 7px;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border: none;
+  background-color: white;
+}
+.heading {
+  padding: 14px;
+  color: #dafffb;
+  overflow: hidden;
+}
+#circleChart {
+  height: 130px;
+}
+#caloriesChart {
+  height: 130px;
+  width: 130px;
 }
 #graphDiv {
   display: flex;
@@ -27,7 +144,6 @@
   width: 100%;
   height: 55vh;
 }
-
 #stats {
   display: flex;
   flex-direction: column;
@@ -37,23 +153,18 @@
   display: flex;
   width: 100%;
 }
-
 #macros {
   display: flex;
   width: 100%;
 }
-.boxArrang {
-  width: 50%;
-}
-
 .box {
   margin: 7px;
   width: 50%;
   background-color: #9185855f;
   backdrop-filter: blur(58px);
   -webkit-backdrop-filter: blur(58px);
-  border-radius: 15px;
-  border: 2px black solid;
+  border-radius: 15px !important;
+  border: 2px solid transparent;
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
@@ -61,6 +172,7 @@
   padding: 10px;
   height: 50px;
   overflow-y: hidden;
+  border: 2px rgb(255, 128, 247) solid;
 }
 .text {
   font-size: 1rem;
@@ -79,53 +191,67 @@ h4 {
   border-radius: 10px;
   margin-right: 15px;
 }
-
 h3 {
   color: rgb(218, 255, 251);
 }
-
-#greeting {
-  margin: 30px;
-}
-h1 {
-  color: rgb(218, 255, 251);
-}
-#subHeading {
+#graph {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-  color: #64ccc5;
-  padding-top: 8px;
-  font-size: 17px;
+  justify-content: space-between;
+  padding-left: 20px;
+  height: 80%;
 }
-
-#subHeading img {
-  height: 47px;
-  width: 50px;
-  margin-right: 11px;
+#text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
 }
-
-#subHeading h2 {
-  margin-bottom: 8px;
-  background: linear-gradient(
-    to right,
-    #ff5733,
-    #00a6fb
-  ); /* Adjust the colors as needed */
-  -webkit-background-clip: text; /* This property is used for WebKit-based browsers */
-  color: transparent;
+#goal {
+  min-width: 180px;
 }
-
-::-webkit-scrollbar {
-  width: 0;
-  background: transparent; /* This is important for Firefox */
+.textBox {
+  display: flex;
 }
-
-/* Optional: Hide scrollbar buttons and track */
-::-webkit-scrollbar-thumb {
-  background: transparent;
+.iconText {
+  padding-left: 10px;
 }
-
-::-webkit-scrollbar-track {
-  background: transparent;
+.slideIcon {
+  min-width: 30px;
+}
+#caloriesChart {
+  width: 90%; /* Set the width to 100% */
+  height: 90%; /* Set the height to 100% */
+}
+.macrosGraph {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+.macrosGraphCircle {
+  width: 30%;
+  padding-top: 10px;
+}
+.circleChartDiv {
+  padding-top: 10px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.macrosGraphText {
+  top: 59%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  position: absolute;
+}
+.macrosLeft {
+  text-align: center;
+  padding-top: 10px;
+  color: rgb(184, 181, 181);
+}
+.headingCircleChart h3 {
+  font-size: 16px;
+  text-align: center;
 }
