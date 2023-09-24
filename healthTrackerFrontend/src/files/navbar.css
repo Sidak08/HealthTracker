@@ -16,6 +16,7 @@
   background-color: #ffffff32;
   backdrop-filter: blur(58px);
   -webkit-backdrop-filter: blur(58px);
+  border: 2px solid black;
 }
 /* #addDiv {
   position: fixed !important;
@@ -26,16 +27,17 @@
   bottom: 50px;
 } */
 #add {
-  position: fixed;
+  /* position: fixed;
   right: 40%;
-  bottom: 5px;
+  bottom: 5px; */
+  margin-top: 5px;
   width: 67px;
   height: 67px;
   border-radius: 50%;
-  background-color: #947ac2;
-  color: rgb(218, 255, 251);
+  color: rgb(232, 248, 246);
   font-size: 2rem;
-  border: 1px solid white;
+  border: 2px solid rgb(0, 0, 0);
+  background-color: #0a535d;
 }
 .sides {
   width: 40%;

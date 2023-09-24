@@ -11,7 +11,7 @@ import fire from "../assets/stats/icons8-fire-50-2.png"
 import weatherAPI from "./secret.jsx"
 import axios from 'axios';
 import sun from "../assets/weatherIcon/Group 1-2.svg"
-import { FlagSvg } from "./Svg"
+import { FlagSvg, FoodSvg, WorkoutSvg } from "./Svg"
 let weatherData = {}
 let longitude = ""
 let latitude = ""
@@ -93,6 +93,15 @@ const TodayGoal = () => {
     const [userData, setUserData] = useState(blankUserData);
     const [goal, setGoal] = useState()
 
+    const calorieChartOption = {
+        cutout: "85%",
+        borderColor: "none"
+    }
+    const macrosChartOption = {
+        cutout: "84%",
+        borderColor: "none"
+    }
+
     const calorieChartData = {
         labels: [
         ],
@@ -100,9 +109,9 @@ const TodayGoal = () => {
             label: "",
             data: [userData.goals.caloriesGoal - userData.dailySummary[0].caloriesConsumed, userData.dailySummary[0].caloriesBurned, userData.dailySummary[0].caloriesConsumed],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.3)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)'
+                'rgba(218, 255, 251, 0.3)',
+                "#ef8731",
+                '#206af4'
             ],
             hoverOffset: 4
         }]
@@ -114,8 +123,8 @@ const TodayGoal = () => {
             label: "",
             data: [userData.goals.carbohydrateGoal - userData.dailySummary[0].macrosConsumed.carbohydrate, userData.dailySummary[0].macrosConsumed.carbohydrate],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.3)',
-                'rgb(54, 162, 235)',
+                'rgba(89, 208, 198, 0.3)',
+                'rgb(89, 208, 198)',
             ],
             hoverOffset: 4
         }]
@@ -127,8 +136,8 @@ const TodayGoal = () => {
             label: "",
             data: [userData.goals.fatGoal - userData.dailySummary[0].macrosConsumed.fat, userData.dailySummary[0].macrosConsumed.fat],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.3)',
-                'rgb(54, 162, 235)',
+                'rgba(176, 115, 199, 0.3)',
+                'rgb(176, 115, 199)',
             ],
             hoverOffset: 4
         }]
@@ -140,8 +149,8 @@ const TodayGoal = () => {
             label: "",
             data: [userData.goals.proteinGoal - userData.dailySummary[0].macrosConsumed.protein, userData.dailySummary[0].macrosConsumed.protein],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.3)',
-                'rgb(54, 162, 235)',
+                'rgba(245, 188, 93, 0.3)',
+                'rgb(245, 188, 93)',
             ],
             hoverOffset: 4
         }]
@@ -226,7 +235,7 @@ const TodayGoal = () => {
         });
     }, []);
 
-    const buildGraph = (graphDataRef, chartInstanceThing, setChartInstanceThing, data) => {
+    const buildGraph = (graphDataRef, chartInstanceThing, setChartInstanceThing, data, options) => {
         const ctx = graphDataRef.current;
         if (chartInstanceThing) {
             chartInstanceThing.destroy();
@@ -234,9 +243,7 @@ const TodayGoal = () => {
         const newCaloriesChartInstance = new Chart(ctx, {
             type: 'doughnut',
             data: data,
-            options: {
-                cutout: "80%"
-            }
+            options: options
         });
         setChartInstanceThing(newCaloriesChartInstance);
         return () => {
@@ -245,11 +252,12 @@ const TodayGoal = () => {
             }
         };
     }
+
     useEffect(() => {
-        buildGraph(caloriesRef, chartInstance, setChartInstance, calorieChartData)
-        buildGraph(carbohydrateGraphRef, carbohydrateGraph, setCarbohydrateGraph, carbohydrateGraphData)
-        buildGraph(fatGraphRef, fatGraph, setFatGraph, fatGraphData)
-        buildGraph(proteinGraphRef, proteinGraph, setProteinGraph, proteinGraphData)
+        buildGraph(caloriesRef, chartInstance, setChartInstance, calorieChartData, calorieChartOption)
+        buildGraph(carbohydrateGraphRef, carbohydrateGraph, setCarbohydrateGraph, carbohydrateGraphData, macrosChartOption)
+        buildGraph(fatGraphRef, fatGraph, setFatGraph, fatGraphData, macrosChartOption)
+        buildGraph(proteinGraphRef, proteinGraph, setProteinGraph, proteinGraphData, macrosChartOption)
     }, [userData])
 
     return (
@@ -263,8 +271,14 @@ const TodayGoal = () => {
                             <h4>Remaining = Goal - Food + Exercise</h4>
                         </div>
                         <div id='graph'>
-                            <div id='circleChart' style={{ width: '90%', height: '90%' }}>
-                                <canvas id='caloriesChart' ref={caloriesRef}></canvas>
+                            <div style={{ width: '90%', height: '90%' }} id="circleGraphChartDiv">
+                                <div id='circleChart' style={{ width: '100%', height: '100%' }}>
+                                    <canvas id='caloriesChart' ref={caloriesRef}></canvas>
+                                </div>
+                                <div id='circleGraphText'>
+                                    <h1>{userData.goals.caloriesGoal - userData.dailySummary[0].caloriesConsumed}</h1>
+                                    <h2>Remaining</h2>
+                                </div>
                             </div>
                             <div id='text'>
                                 <div id='goal' className='textBox'>
@@ -279,21 +293,21 @@ const TodayGoal = () => {
 
                                 <div id='goal' className='textBox'>
                                     <div className='slideIcon'>
-                                        <FlagSvg width={width} height={height} color="#DAFFFB" />
+                                        <FoodSvg width={width} height={height} color="#206af4" />
                                     </div>
                                     <div className='iconText'>
                                         <h5>Food</h5>
-                                        {userData.dailySummary[1].caloriesConsumed}
+                                        {userData.dailySummary[0].caloriesConsumed}
                                     </div>
                                 </div>
 
                                 <div id='goal' className='textBox'>
                                     <div className='slideIcon'>
-                                        <FlagSvg width={width} height={height} color="#DAFFFB" />
+                                        <WorkoutSvg width={width} height={height} color="#ef8731" />
                                     </div>
                                     <div className='iconText'>
-                                        <h5>Food</h5>
-                                        {userData.dailySummary[1].caloriesConsumed}
+                                        <h5>Exercise</h5>
+                                        {userData.dailySummary[0].caloriesBurned}
                                     </div>
                                 </div>
 
@@ -307,7 +321,7 @@ const TodayGoal = () => {
                         <div className='macrosGraph'>
                             <div className='macrosGraphCircle'>
                                 <div className='headingCircleChart'>
-                                    <h3>Carbohydrates</h3>
+                                    <h3 id='Carbohydrates'>Carbohydrates</h3>
                                 </div>
                                 <div className='circleChartDiv'>
                                     <div className='circleChart' style={{ width: '90%', height: '90%' }}>
@@ -324,7 +338,7 @@ const TodayGoal = () => {
 
                             <div className='macrosGraphCircle'>
                                 <div className='headingCircleChart'>
-                                    <h3>Fat</h3>
+                                    <h3 id='fat'>Fat</h3>
                                 </div>
                                 <div className='circleChartDiv'>
                                     <div className='circleChart' style={{ width: '90%', height: '90%' }}>
@@ -341,7 +355,7 @@ const TodayGoal = () => {
 
                             <div className='macrosGraphCircle'>
                                 <div className='headingCircleChart'>
-                                    <h3>Protein</h3>
+                                    <h3 id="protein">Protein</h3>
                                 </div>
                                 <div className='circleChartDiv'>
                                     <div className='circleChart' style={{ width: '90%', height: '90%' }}>
