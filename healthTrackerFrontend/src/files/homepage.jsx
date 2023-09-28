@@ -4,6 +4,7 @@ import Navbar from "./navbar"
 import "./homepage.css"
 import "./navbar.css"
 import Chart from 'chart.js/auto'
+import 'chart.js/auto'; // Import 'chart.js/auto' instead of 'chart.js'
 import waterIcon from "../assets/stats/glass-2.png"
 import thunder from "../assets/stats/vector 4.png"
 import sleepIcon from "../assets/stats/zzz-sleep-symbol.png"
@@ -12,84 +13,150 @@ import weatherAPI from "./secret.jsx"
 import axios from 'axios';
 import sun from "../assets/weatherIcon/Group 1-2.svg"
 import { FlagSvg, FoodSvg, WorkoutSvg } from "./Svg"
-let weatherData = {}
-let longitude = ""
-let latitude = ""
-const weatherUrl = `http://api.weatherapi.com/v1/current.json?key=${weatherAPI}&q=${latitude},${longitude}&aqi=yes`;
-const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-];
-const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-const emojis = ["👋", "🌞", "🙌", "👍", "🎉", "😊", "👋🏼", "😃", "🤗", "✨"];
-let blankUserData = {
-    "user": {
-        "name": "blankData",
-        "age": 0,
-        "weight": 0, // in kilograms
-        "height": 0, // in centimeters
-        "gender": ""
-    },
-    "goals": {
-        "caloriesGoal": 0, // daily calorie intake goal
-        "proteinGoal": 0, // daily protein intake goal (in grams)
-        "carbohydrateGoal": 0, // daily carbohydrate intake goal (in grams)
-        "fatGoal": 0, // daily fat intake goal (in grams)
-        "sugarGoal": 0, // daily sugar intake goal (in grams)
-        "ironGoal": 0 // daily iron intake goal (in milligrams)
-    },
-    "dailySummary": [
-        {
-            "date": "",
-            "caloriesConsumed": 0,
-            "caloriesBurned": 0,
-            "exercise": [
-                {
-                    "name": "",
-                    "duration": "",
-                    "caloriesBurned": 0
-                },
-                {
-                    "name": "",
-                    "duration": "",
-                    "caloriesBurned": 0
-                }
-            ],
-            "macrosConsumed": {
-                "protein": 0,
-                "carbohydrate": 0,
-                "fat": 0,
-                "sugar": 0, // grams
-                "iron": 0 // milligrams
-            }
-        },
-        {
-            "date": "",
-            "caloriesConsumed": "",
-            "caloriesBurned": "",
-            "exercise": [
-                {
-                    "name": "",
-                    "duration": "",
-                    "caloriesBurned": ""
-                }
-            ],
-            "macrosConsumed": {
-                "protein": "",
-                "carbohydrate": "",
-                "fat": "",
-                "sugar": "", // grams
-                "iron": "" // milligrams
-            }
-        }
-        // ... add more daily summaries for different dates
-    ]
-}
-const greetingEmojis = emojis[Math.floor(Math.random() * emojis.length)]
+import { Bar } from 'react-chartjs-2';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
+import { unstable_createStyleFunctionSx } from '@mui/system'
 
+const Greeting = () => {
+    let weatherData = {}
+    let longitude = ""
+    let latitude = ""
+    const weatherUrl = `http://api.weatherapi.com/v1/current.json?key=${weatherAPI}&q=${latitude},${longitude}&aqi=yes`;
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const emojis = ["👋", "🌞", "🙌", "👍", "🎉", "😊", "👋🏼", "😃", "🤗", "✨"];
+    const greetingEmojis = emojis[Math.floor(Math.random() * emojis.length)]
+
+    let today = new Date();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
+    let greeting = today.getHours < 12 ? "morning" : (today.getHours < 18 ? "afternoon" : "evening");
+
+    function getWeekday(dateStr) {
+        const dateObj = new Date(dateStr);
+        const weekdayIndex = dateObj.getDay();
+        return daysOfWeek[weekdayIndex];
+    }
+    const weekday = getWeekday(date.toString());
+
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                latitude = position.coords.latitude;
+                longitude = position.coords.longitude;
+                weatherReport()
+            },
+            function (error) {
+                console.error("Error getting location:", error);
+                // program from an error svg
+            }
+        );
+    } else {
+        console.log("Geolocation is not available.");
+    }
+
+    const weatherReport = () => {
+        fetch("http://api.weatherapi.com/v1/current.json?key=b999e6d992fd4574a81202635232208&q=43.6851491,-79.8468381&aqi=yes")
+            .then((res) => res.json())
+            .then((Data) => {
+                weatherData = Data
+                useWeather(`https:${weatherData.current.condition.icon}`)
+            })
+            .catch((err) => { console.log(err) })
+    }
+
+    const [weather, useWeather] = useState(sun)
+
+    return (
+
+        <div id='greeting'>
+            <h1>{`Good ${greeting}, ${name} ${greetingEmojis}`}</h1>
+            <div id='subHeading'> <img src={weather} alt="weatherData" srcSet="" /> <h2>{` ${today.getDate()} ${months[today.getMonth()]}`}</h2></div>
+        </div>
+    )
+
+
+}
 
 const TodayGoal = () => {
+
+    const blankUserData = {
+        "user": {
+            "name": "blankData",
+            "age": 0,
+            "weight": 0, // in kilograms
+            "height": 0, // in centimeters
+            "gender": ""
+        },
+        "goals": {
+            "caloriesGoal": 0, // daily calorie intake goal
+            "proteinGoal": 5, // daily protein intake goal (in grams)
+            "carbohydrateGoal": 0, // daily carbohydrate intake goal (in grams)
+            "fatGoal": 0, // daily fat intake goal (in grams)
+            "sugarGoal": 0, // daily sugar intake goal (in grams)
+            "ironGoal": 0, // daily iron intake goal (in milligrams)
+            "sodiumGoal": 0,
+            "cholesterolGoal": 0,
+            "fiberGoal": 0
+        },
+        "dailySummary": [
+            {
+                "date": "",
+                "caloriesConsumed": 0,
+                "caloriesBurned": 0,
+                "exercise": [
+                    {
+                        "name": "",
+                        "duration": "",
+                        "caloriesBurned": 0
+                    },
+                    {
+                        "name": "",
+                        "duration": "",
+                        "caloriesBurned": 0
+                    }
+                ],
+                "macrosConsumed": {
+                    "protein": 0,
+                    "carbohydrate": 0,
+                    "fat": 0,
+                    "sugar": 0, // grams
+                    "iron": 0, // milligrams
+                    "sodium": 0,
+                    "cholesterol": 0,
+                    "fiber": 0
+                }
+            },
+            {
+                "date": "",
+                "caloriesConsumed": "",
+                "caloriesBurned": "",
+                "exercise": [
+                    {
+                        "name": "",
+                        "duration": "",
+                        "caloriesBurned": ""
+                    }
+                ],
+                "macrosConsumed": {
+                    "protein": "",
+                    "carbohydrate": "",
+                    "fat": "",
+                    "sugar": "", // grams
+                    "iron": "" // milligrams
+                }
+            }
+            // ... add more daily summaries for different dates
+        ]
+    }
+
     const [height, width] = [30, 30]
+    const healthHeartStyle = {}
+
     const [userData, setUserData] = useState(blankUserData);
     const [goal, setGoal] = useState()
 
@@ -156,6 +223,7 @@ const TodayGoal = () => {
         }]
     };
 
+
     const [chartInstance, setChartInstance] = useState(null);
     const caloriesRef = useRef(null);
 
@@ -168,8 +236,25 @@ const TodayGoal = () => {
     const [proteinGraph, setProteinGraph] = useState(null);
     const proteinGraphRef = useRef(null);
 
-
     const [macrosLeft, setMacrosLeft] = useState()
+
+    const buildGraph = (graphDataRef, chartInstanceThing, setChartInstanceThing, data, options) => {
+        const ctx = graphDataRef.current;
+        if (chartInstanceThing) {
+            chartInstanceThing.destroy();
+        }
+        const newCaloriesChartInstance = new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+            options: options
+        });
+        setChartInstanceThing(newCaloriesChartInstance);
+        return () => {
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+        };
+    }
 
     useEffect(() => {
         axios.post('http://localhost:3000/home', {})
@@ -185,8 +270,19 @@ const TodayGoal = () => {
     }, [])
     useEffect(() => {
         const sliderContent = document.querySelector('#slides');
+
+        const caloriesSlideButton = document.querySelector("#caloriesSlideButton")
+        const macrosSlideButton = document.querySelector("#macrosSlideButton")
+        const healthyHeartSlideButton = document.querySelector("#healthyHeartSlideButton")
+        const lowCarbSlideButton = document.querySelector("#lowCarbSlideButton")
+
         const leftArrow = document.querySelector('.arrow.left');
         const rightArrow = document.querySelector('.arrow.right');
+
+        const color = {
+            "blue": "blue",
+            "white": "white"
+        }
 
         leftArrow.addEventListener('click', () => {
             sliderContent.scrollLeft -= 200;
@@ -195,6 +291,53 @@ const TodayGoal = () => {
         rightArrow.addEventListener('click', () => {
             sliderContent.scrollLeft += 200;
         });
+
+        caloriesSlideButton.style.backgroundColor = "blue"
+
+
+        caloriesSlideButton.addEventListener('click', () => {
+            sliderContent.scrollLeft = 0;
+
+
+            caloriesSlideButton.style.backgroundColor = color.blue,
+                macrosSlideButton.style.backgroundColor = color.white,
+                healthyHeartSlideButton.style.backgroundColor = color.white,
+                lowCarbSlideButton.style.backgroundColor = color.white
+
+        })
+
+        macrosSlideButton.addEventListener('click', () => {
+            sliderContent.scrollLeft = 300;
+
+            caloriesSlideButton.style.backgroundColor = color.white,
+                macrosSlideButton.style.backgroundColor = color.blue,
+                healthyHeartSlideButton.style.backgroundColor = color.white,
+                lowCarbSlideButton.style.backgroundColor = color.white
+
+        })
+
+        healthyHeartSlideButton.addEventListener('click', () => {
+            sliderContent.scrollLeft = 600;
+
+            caloriesSlideButton.style.backgroundColor = color.white,
+                macrosSlideButton.style.backgroundColor = color.white,
+                healthyHeartSlideButton.style.backgroundColor = color.blue,
+                lowCarbSlideButton.style.backgroundColor = color.white
+
+        })
+
+
+        lowCarbSlideButton.addEventListener('click', () => {
+            sliderContent.scrollLeft = 1000;
+
+            caloriesSlideButton.style.backgroundColor = color.white,
+                macrosSlideButton.style.backgroundColor = color.white,
+                healthyHeartSlideButton.style.backgroundColor = color.white,
+                lowCarbSlideButton.style.backgroundColor = color.blue
+
+
+        })
+
 
         let startX;
         let scrollLeft;
@@ -234,25 +377,6 @@ const TodayGoal = () => {
             sliderContent.scrollLeft = scrollLeft - walk;
         });
     }, []);
-
-    const buildGraph = (graphDataRef, chartInstanceThing, setChartInstanceThing, data, options) => {
-        const ctx = graphDataRef.current;
-        if (chartInstanceThing) {
-            chartInstanceThing.destroy();
-        }
-        const newCaloriesChartInstance = new Chart(ctx, {
-            type: 'doughnut',
-            data: data,
-            options: options
-        });
-        setChartInstanceThing(newCaloriesChartInstance);
-        return () => {
-            if (chartInstance) {
-                chartInstance.destroy();
-            }
-        };
-    }
-
     useEffect(() => {
         buildGraph(caloriesRef, chartInstance, setChartInstance, calorieChartData, calorieChartOption)
         buildGraph(carbohydrateGraphRef, carbohydrateGraph, setCarbohydrateGraph, carbohydrateGraphData, macrosChartOption)
@@ -371,74 +495,78 @@ const TodayGoal = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="slide">
+                    <div className="slide" id='healthyHeartSlide'>
+                        <div className='heading'>
+                            <h2>Healthy Heart</h2>
+                        </div>
+
+                        <div className='barGraphDiv'>
+                            <div className='barGraphDivText'>
+                                <h4>Fat</h4>
+                                <h4>{userData.dailySummary[0].macrosConsumed.fat}/{userData.goals.fatGoal}g</h4>
+                            </div>
+                            <LinearProgress variant="determinate" value={(userData.dailySummary[0].macrosConsumed.fat / userData.goals.fatGoal) * 100} className="healthyHeartBar" style={healthHeartStyle} />
+                        </div>
+
+                        <div className='barGraphDiv'>
+                            <div className='barGraphDivText'>
+                                <h4>Sodium</h4>
+                                <h4>{userData.dailySummary[0].macrosConsumed.sodium}/{userData.goals.sodiumGoal}g</h4>
+                            </div>
+                            <LinearProgress variant="determinate" value={(userData.dailySummary[0].macrosConsumed.sodium / userData.goals.sodiumGoal) * 100} className="healthyHeartBar" style={healthHeartStyle} />
+                        </div>
+
+                        <div className='barGraphDiv'>
+                            <div className='barGraphDivText'>
+                                <h4>Cholesterol</h4>
+                                <h4>{userData.dailySummary[0].macrosConsumed.cholesterol}/{userData.goals.cholesterolGoal}g</h4>
+                            </div>
+                            <LinearProgress variant="determinate" value={(userData.dailySummary[0].macrosConsumed.cholesterol / userData.goals.cholesterolGoal) * 100} className="healthyHeartBar" style={healthHeartStyle} />
+                        </div>
                     </div>
-                    <div className="slide">
+                    <div className="slide" id='lowCarbSlide'>
+                        <div className='heading'>
+                            <h2>Low Carb</h2>
+                        </div>
+
+                        <div className='barGraphDiv'>
+                            <div className='barGraphDivText'>
+                                <h4>Carbohydrate</h4>
+                                <h4>{userData.dailySummary[0].macrosConsumed.carbohydrate}/{userData.goals.carbohydrateGoal}g</h4>
+                            </div>
+                            <LinearProgress variant="determinate" value={(userData.dailySummary[0].macrosConsumed.carbohydrate / userData.goals.carbohydrateGoal) * 100} className="healthyHeartBar" style={healthHeartStyle} />
+                        </div>
+
+                        <div className='barGraphDiv'>
+                            <div className='barGraphDivText'>
+                                <h4>Sugar</h4>
+                                <h4>{userData.dailySummary[0].macrosConsumed.sugar}/{userData.goals.sugarGoal}g</h4>
+                            </div>
+                            <LinearProgress variant="determinate" value={(userData.dailySummary[0].macrosConsumed.sugar / userData.goals.sugarGoal) * 100} className="healthyHeartBar" style={healthHeartStyle} />
+                        </div>
+
+                        <div className='barGraphDiv'>
+                            <div className='barGraphDivText'>
+                                <h4>Fiber</h4>
+                                <h4>{userData.dailySummary[0].macrosConsumed.fiber}/{userData.goals.fiberGoal}g</h4>
+                            </div>
+                            <LinearProgress variant="determinate" value={(userData.dailySummary[0].macrosConsumed.fiber / userData.goals.fiberGoal) * 100} className="healthyHeartBar" style={healthHeartStyle} />
+                        </div>
+
                     </div>
                 </div>
                 <button className="arrow right">&gt;</button>
             </div>
             <div id='movementDiv'>
-                <button className='moveButton'></button>
-                <button className='moveButton'></button>
-                <button className='moveButton'></button>
-                <button className='moveButton'></button>
+                <button className='moveButton' id='caloriesSlideButton'></button>
+                <button className='moveButton' id='macrosSlideButton'></button>
+                <button className='moveButton' id='healthyHeartSlideButton'></button>
+                <button className='moveButton' id='lowCarbSlideButton'></button>
             </div>
         </div>
     );
 }
 
-const Greeting = () => {
-    let today = new Date();
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-
-    let greeting = today.getHours < 12 ? "morning" : (today.getHours < 18 ? "afternoon" : "evening");
-
-    function getWeekday(dateStr) {
-        const dateObj = new Date(dateStr);
-        const weekdayIndex = dateObj.getDay();
-        return daysOfWeek[weekdayIndex];
-    }
-    const weekday = getWeekday(date.toString());
-
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(
-            function (position) {
-                latitude = position.coords.latitude;
-                longitude = position.coords.longitude;
-                weatherReport()
-            },
-            function (error) {
-                console.error("Error getting location:", error);
-                // program from an error svg
-            }
-        );
-    } else {
-        console.log("Geolocation is not available.");
-    }
-
-    const weatherReport = () => {
-        fetch("http://api.weatherapi.com/v1/current.json?key=b999e6d992fd4574a81202635232208&q=43.6851491,-79.8468381&aqi=yes")
-            .then((res) => res.json())
-            .then((Data) => {
-                weatherData = Data
-                useWeather(`https:${weatherData.current.condition.icon}`)
-            })
-            .catch((err) => { console.log(err) })
-    }
-
-    const [weather, useWeather] = useState(sun)
-
-    return (
-
-        <div id='greeting'>
-            <h1>{`Good ${greeting}, ${name} ${greetingEmojis}`}</h1>
-            <div id='subHeading'> <img src={weather} alt="weatherData" srcSet="" /> <h2>{` ${today.getDate()} ${months[today.getMonth()]}`}</h2></div>
-        </div>
-    )
-
-
-}
 function HomePage() {
     return (
         <div id='homePage'>
@@ -449,8 +577,10 @@ function HomePage() {
 
     )
 }
+
 export default HomePage
 
+//code for future use
 function Stats({ protein, fat, suger, calories, sleep, water }) {
     const [count, setCount] = useState({ protein, fat, suger, calories, sleep, water });
     return (
@@ -594,4 +724,32 @@ const initialData = {
         }
     ]
 };
+const HorizontalBarChart = () => {
+    const data = {
+        labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4'],
+        datasets: [
+            {
+                label: 'Horizontal Bar Chart',
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                data: [5, 10, 8, 15],
+            },
+        ],
+    };
 
+    const options = {
+        indexAxis: 'y', // Set the axis to 'y' for a horizontal bar chart
+        scales: {
+            x: {
+                beginAtZero: true,
+            },
+        },
+    };
+
+    return (
+        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+            <Bar data={data} options={options} />
+        </div>
+    );
+};

@@ -294,3 +294,30 @@ h3 {
 #protein {
   color: rgb(245, 188, 93);
 }
+
+.barGraphDivText {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  color: #dafffb;
+  margin: 0px 20px;
+}
+
+#healthyHeartSlide {
+  justify-content: space-between;
+}
+
+.healthyHeartBar {
+  margin: 6px 20px 20px 20px;
+  border-radius: 15px;
+  min-height: 10px;
+  border: black 2px solid;
+}
+
+#lowCarbSlide {
+  justify-content: space-between;
+}
+
+/* margin: "6px 20px 20px 20px";
+ borderradius: "15px";
+     height: "10px"; */

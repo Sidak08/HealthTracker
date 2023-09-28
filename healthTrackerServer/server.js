@@ -16,7 +16,10 @@ const testData = {
         "carbohydrateGoal": 250, // daily carbohydrate intake goal (in grams)
         "fatGoal": 90, // daily fat intake goal (in grams)
         "sugarGoal": 50, // daily sugar intake goal (in grams)
-        "ironGoal": 18 // daily iron intake goal (in milligrams)
+        "ironGoal": 18, // daily iron intake goal (in milligrams)
+        "sodiumGoal": 2300,
+        "cholesterolGoal": 300,
+        "fiberGoal": 28
     },
     "dailySummary": [
         {
@@ -40,7 +43,10 @@ const testData = {
                 "carbohydrate": 220,
                 "fat": 10,
                 "sugar": 45, // grams
-                "iron": 15 // milligrams
+                "iron": 15, // milligrams
+                "sodium": 600,
+                "cholesterol": 100,
+                "fiber": 20
             }
         },
         {
