@@ -19,23 +19,25 @@ const testData = {
         "ironGoal": 18, // daily iron intake goal (in milligrams)
         "sodiumGoal": 2300,
         "cholesterolGoal": 300,
-        "fiberGoal": 28
+        "fiberGoal": 28,
+        "stepGoal": 10000
     },
     "dailySummary": [
         {
             "date": "2023-09-01",
             "caloriesConsumed": 1000,
-            "caloriesBurned": 300,
+            "caloriesBurned": 400,
+            "stepsTaken": 2500,
             "exercise": [
                 {
                     "name": "Running",
-                    "duration": "30 minutes",
+                    "duration": 20,
                     "caloriesBurned": 200
                 },
                 {
                     "name": "Cycling",
-                    "duration": "20 minutes",
-                    "caloriesBurned": 100
+                    "duration": 20,
+                    "caloriesBurned": 150
                 }
             ],
             "macrosConsumed": {
@@ -53,10 +55,11 @@ const testData = {
             "date": "2023-09-02",
             "caloriesConsumed": 1800,
             "caloriesBurned": 250,
+            "stepsTaken": 2000,
             "exercise": [
                 {
                     "name": "Swimming",
-                    "duration": "45 minutes",
+                    "duration": 45,
                     "caloriesBurned": 250
                 }
             ],

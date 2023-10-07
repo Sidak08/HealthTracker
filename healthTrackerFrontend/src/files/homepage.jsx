@@ -12,11 +12,12 @@ import fire from "../assets/stats/icons8-fire-50-2.png"
 import weatherAPI from "./secret.jsx"
 import axios from 'axios';
 import sun from "../assets/weatherIcon/Group 1-2.svg"
-import { FlagSvg, FoodSvg, WorkoutSvg } from "./Svg"
+import { FlagSvg, FoodSvg, WorkoutSvg, StepsSvg, ClockSvg, FireSvg } from "./Svg"
 import { Bar } from 'react-chartjs-2';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import { unstable_createStyleFunctionSx } from '@mui/system'
+import { userDataContext } from '../App'; // Adjust the path as needed
 
 const Greeting = () => {
     let weatherData = {}
@@ -83,81 +84,10 @@ const Greeting = () => {
 }
 
 const TodayGoal = () => {
-
-    const blankUserData = {
-        "user": {
-            "name": "blankData",
-            "age": 0,
-            "weight": 0, // in kilograms
-            "height": 0, // in centimeters
-            "gender": ""
-        },
-        "goals": {
-            "caloriesGoal": 0, // daily calorie intake goal
-            "proteinGoal": 5, // daily protein intake goal (in grams)
-            "carbohydrateGoal": 0, // daily carbohydrate intake goal (in grams)
-            "fatGoal": 0, // daily fat intake goal (in grams)
-            "sugarGoal": 0, // daily sugar intake goal (in grams)
-            "ironGoal": 0, // daily iron intake goal (in milligrams)
-            "sodiumGoal": 0,
-            "cholesterolGoal": 0,
-            "fiberGoal": 0
-        },
-        "dailySummary": [
-            {
-                "date": "",
-                "caloriesConsumed": 0,
-                "caloriesBurned": 0,
-                "exercise": [
-                    {
-                        "name": "",
-                        "duration": "",
-                        "caloriesBurned": 0
-                    },
-                    {
-                        "name": "",
-                        "duration": "",
-                        "caloriesBurned": 0
-                    }
-                ],
-                "macrosConsumed": {
-                    "protein": 0,
-                    "carbohydrate": 0,
-                    "fat": 0,
-                    "sugar": 0, // grams
-                    "iron": 0, // milligrams
-                    "sodium": 0,
-                    "cholesterol": 0,
-                    "fiber": 0
-                }
-            },
-            {
-                "date": "",
-                "caloriesConsumed": "",
-                "caloriesBurned": "",
-                "exercise": [
-                    {
-                        "name": "",
-                        "duration": "",
-                        "caloriesBurned": ""
-                    }
-                ],
-                "macrosConsumed": {
-                    "protein": "",
-                    "carbohydrate": "",
-                    "fat": "",
-                    "sugar": "", // grams
-                    "iron": "" // milligrams
-                }
-            }
-            // ... add more daily summaries for different dates
-        ]
-    }
-
     const [height, width] = [30, 30]
     const healthHeartStyle = {}
 
-    const [userData, setUserData] = useState(blankUserData);
+    const { userData, setUserData } = useContext(userDataContext);
     const [goal, setGoal] = useState()
 
     const calorieChartOption = {
@@ -256,18 +186,6 @@ const TodayGoal = () => {
         };
     }
 
-    useEffect(() => {
-        axios.post('http://localhost:3000/home', {})
-            .then(response => {
-                // Handle the successful response
-                // console.log('Response:', response.data);
-                setUserData(response.data);
-            })
-            .catch(error => {
-                // Handle the error
-                console.error('Error:', error);
-            });
-    }, [])
     useEffect(() => {
         const sliderContent = document.querySelector('#slides');
 
@@ -376,6 +294,41 @@ const TodayGoal = () => {
             const walk = (x - startX) * 2;
             sliderContent.scrollLeft = scrollLeft - walk;
         });
+
+        const updateButtonStyles = () => {
+            const scrollPosition = sliderContent.scrollLeft;
+            const buttonMap = {
+                0: caloriesSlideButton,
+                300: macrosSlideButton,
+                600: healthyHeartSlideButton,
+                1000: lowCarbSlideButton,
+            };
+
+            // Reset all buttons to the default background color
+            for (const button of Object.values(buttonMap)) {
+                button.style.backgroundColor = color.white;
+            }
+
+            // Find the closest button to the current scroll position and highlight it
+            const closestButton = Object.keys(buttonMap).reduce((a, b) => {
+                return Math.abs(b - scrollPosition) < Math.abs(a - scrollPosition) ? b : a;
+            });
+
+            buttonMap[closestButton].style.backgroundColor = color.blue;
+        };
+
+        // Attach a scroll event listener to the slider content
+        sliderContent.addEventListener('scroll', updateButtonStyles);
+
+        // Attach a touchend event listener to update button styles after a swipe
+        sliderContent.addEventListener('touchend', updateButtonStyles);
+
+        // Clean up the event listeners when the component unmounts
+        return () => {
+            sliderContent.removeEventListener('scroll', updateButtonStyles);
+            sliderContent.removeEventListener('touchend', updateButtonStyles);
+        };
+
     }, []);
     useEffect(() => {
         buildGraph(caloriesRef, chartInstance, setChartInstance, calorieChartData, calorieChartOption)
@@ -567,11 +520,63 @@ const TodayGoal = () => {
     );
 }
 
+const StepsExercise = () => {
+    const { userData, setUserData } = useContext(userDataContext)
+    const [exerciseTime, setExerciseTime] = useState(10);
+
+    useEffect(() => {
+        let totalExerciseTime = 0; // Initialize with the default value
+
+        for (let i = 0; i < userData.dailySummary[0].exercise.length; i++) {
+            totalExerciseTime += userData.dailySummary[0].exercise[i].caloriesBurned;
+            console.log(userData.dailySummary[0].exercise[i].caloriesBurned);
+        }
+
+        setExerciseTime(totalExerciseTime);
+    }, [userData.dailySummary]);
+
+    return (
+        <div id='stepsExercise'>
+            <div id='steps' className='bottomBox'>
+                <div className='headingBottomBox'>
+                    <h3>Steps</h3>
+                </div>
+                <div>
+                    <StepsSvg width={40} height={40} color="#EA3762" />
+                    <h2>{userData.dailySummary[0].stepsTaken}</h2>
+                </div>
+                <div id='goal'>
+                    <h4>Goal: {userData.dailySummary[0].stepsTaken} Steps</h4>
+                    <LinearProgress variant="determinate" value={(userData.dailySummary[0].stepsTaken / userData.goals.stepGoal) * 100} id="stepsGoalBar" color='inherit' />
+                </div>
+            </div>
+
+            <div id='exercise' className='bottomBox'>
+                <div className='headingBottomBox'>
+                    <h3>Exercise</h3>
+                </div>
+                <div>
+                    <div id='caloriesBottomDiv' className='bottomDivArag'>
+                        <FireSvg width={30} height={30} color="#F99B32" />
+                        <h4>{userData.dailySummary[0].caloriesBurned} cal</h4>
+                    </div>
+                    <div id='timeBottomDiv' className='bottomDivArag'>
+                        <ClockSvg width={30} height={30} color="#F99B32" />
+                        <h4>{exerciseTime}: min</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+
+}
+
 function HomePage() {
     return (
         <div id='homePage'>
             <Greeting />
             <TodayGoal />
+            <StepsExercise />
             <Navbar />
         </div>
 
@@ -580,7 +585,10 @@ function HomePage() {
 
 export default HomePage
 
-//code for future use
+
+
+
+
 function Stats({ protein, fat, suger, calories, sleep, water }) {
     const [count, setCount] = useState({ protein, fat, suger, calories, sleep, water });
     return (

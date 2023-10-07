@@ -3,6 +3,7 @@
   --box-color: #164b60;
   --border-1-light: #dafffb;
   --border-2-dark: #1b6b93;
+  --text: #dafffb;
 }
 * {
   box-sizing: border-box;
@@ -92,6 +93,7 @@ h1 {
   display: flex;
   flex-direction: column;
   height: 250px;
+  border: 2px solid black;
 }
 .arrow {
   cursor: pointer;
@@ -318,6 +320,62 @@ h3 {
   justify-content: space-between;
 }
 
-/* margin: "6px 20px 20px 20px";
- borderradius: "15px";
-     height: "10px"; */
+#stepsExercise {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.bottomBox {
+  margin-top: 20px;
+  height: 150px;
+  width: 45%;
+  background-color: #ffffff20;
+  backdrop-filter: blur(48px);
+  -webkit-backdrop-filter: blur(48px);
+  border-radius: 15px;
+  border: 2px solid black;
+}
+.headingBottomBox {
+  color: var(--text);
+  padding-top: 12px;
+  padding-left: 12px;
+}
+#steps > div:nth-child(2) {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+#steps > div:nth-child(2) > h2 {
+  margin-left: 10px;
+  color: var(--text);
+}
+#goal > h4 {
+  margin-top: 5px;
+  margin-left: 10px;
+  color: var(--text);
+}
+#stepsGoalBar {
+  margin: 8px 17px 10px 10px;
+  border-radius: 15px;
+  min-height: 15px;
+  border: black 2px solid;
+  color: #eb5074;
+}
+.bottomDivArag {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  color: var(--text);
+}
+.bottomDivArag h4 {
+  padding-left: 10px;
+}
+#exercise > div:nth-child(2) {
+  margin-top: 20px;
+  display: flexbox;
+  justify-content: space-between;
+}
+#timeBottomDiv {
+  margin-top: 14px;
+}
