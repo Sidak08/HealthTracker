@@ -18,7 +18,7 @@ import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import { unstable_createStyleFunctionSx } from '@mui/system'
 import { userDataContext } from '../App'; // Adjust the path as needed
-
+import { Line } from 'react-chartjs-2';
 const Greeting = () => {
     let weatherData = {}
     let longitude = ""
@@ -82,12 +82,12 @@ const Greeting = () => {
 
 
 }
-
 const TodayGoal = () => {
     const [height, width] = [30, 30]
     const healthHeartStyle = {}
 
     const { userData, setUserData } = useContext(userDataContext);
+    console.log(userData)
     const [goal, setGoal] = useState()
 
     const calorieChartOption = {
@@ -246,7 +246,7 @@ const TodayGoal = () => {
 
 
         lowCarbSlideButton.addEventListener('click', () => {
-            sliderContent.scrollLeft = 1000;
+            sliderContent.scrollLeft = 1200;
 
             caloriesSlideButton.style.backgroundColor = color.white,
                 macrosSlideButton.style.backgroundColor = color.white,
@@ -519,7 +519,6 @@ const TodayGoal = () => {
         </div>
     );
 }
-
 const StepsExercise = () => {
     const { userData, setUserData } = useContext(userDataContext)
     const [exerciseTime, setExerciseTime] = useState(10);
@@ -529,7 +528,6 @@ const StepsExercise = () => {
 
         for (let i = 0; i < userData.dailySummary[0].exercise.length; i++) {
             totalExerciseTime += userData.dailySummary[0].exercise[i].caloriesBurned;
-            console.log(userData.dailySummary[0].exercise[i].caloriesBurned);
         }
 
         setExerciseTime(totalExerciseTime);
@@ -570,6 +568,281 @@ const StepsExercise = () => {
     )
 
 }
+const WeightStepsStrength = () => {
+    const { userData, setUserData } = useContext(userDataContext)
+    useEffect(() => {
+        const sliderContent = document.querySelector('#newSlides');
+
+        const caloriesSlideButton = document.querySelector("#strengthSlideButton")
+        const macrosSlideButton = document.querySelector("#weightSlideButton")
+        const healthyHeartSlideButton = document.querySelector("#stepsSlideButton")
+
+        const leftArrow = document.querySelector('.arrow.left');
+        const rightArrow = document.querySelector('.arrow.right');
+
+        const color = {
+            "blue": "blue",
+            "white": "white"
+        }
+
+        leftArrow.addEventListener('click', () => {
+            sliderContent.scrollLeft -= 200;
+        });
+
+        rightArrow.addEventListener('click', () => {
+            sliderContent.scrollLeft += 200;
+        });
+
+        caloriesSlideButton.style.backgroundColor = "blue"
+
+
+        caloriesSlideButton.addEventListener('click', () => {
+            sliderContent.scrollLeft = 0;
+
+
+            caloriesSlideButton.style.backgroundColor = color.blue,
+                macrosSlideButton.style.backgroundColor = color.white,
+                healthyHeartSlideButton.style.backgroundColor = color.white,
+                lowCarbSlideButton.style.backgroundColor = color.white
+
+        })
+
+        macrosSlideButton.addEventListener('click', () => {
+            sliderContent.scrollLeft = 300;
+
+            caloriesSlideButton.style.backgroundColor = color.white,
+                macrosSlideButton.style.backgroundColor = color.blue,
+                healthyHeartSlideButton.style.backgroundColor = color.white,
+                lowCarbSlideButton.style.backgroundColor = color.white
+
+        })
+
+        healthyHeartSlideButton.addEventListener('click', () => {
+            sliderContent.scrollLeft = 600;
+
+            caloriesSlideButton.style.backgroundColor = color.white,
+                macrosSlideButton.style.backgroundColor = color.white,
+                healthyHeartSlideButton.style.backgroundColor = color.blue,
+                lowCarbSlideButton.style.backgroundColor = color.white
+
+        })
+
+        let startX;
+        let scrollLeft;
+
+        sliderContent.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].pageX;
+            scrollLeft = sliderContent.scrollLeft;
+        });
+
+        sliderContent.addEventListener('touchmove', (e) => {
+            const x = e.touches[0].pageX;
+            const walk = (x - startX) * 2;
+            sliderContent.scrollLeft = scrollLeft - walk;
+        });
+
+        let isDown = false;
+
+        sliderContent.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX;
+            scrollLeft = sliderContent.scrollLeft;
+        });
+
+        sliderContent.addEventListener('mouseleave', () => {
+            isDown = false;
+        });
+
+        sliderContent.addEventListener('mouseup', () => {
+            isDown = false;
+        });
+
+        sliderContent.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX;
+            const walk = (x - startX) * 2;
+            sliderContent.scrollLeft = scrollLeft - walk;
+        });
+
+        const updateButtonStyles = () => {
+            const scrollPosition = sliderContent.scrollLeft;
+            const buttonMap = {
+                0: caloriesSlideButton,
+                300: macrosSlideButton,
+                600: healthyHeartSlideButton,
+                1000: lowCarbSlideButton,
+            };
+
+            // Reset all buttons to the default background color
+            for (const button of Object.values(buttonMap)) {
+                button.style.backgroundColor = color.white;
+            }
+
+            // Find the closest button to the current scroll position and highlight it
+            const closestButton = Object.keys(buttonMap).reduce((a, b) => {
+                return Math.abs(b - scrollPosition) < Math.abs(a - scrollPosition) ? b : a;
+            });
+
+            buttonMap[closestButton].style.backgroundColor = color.blue;
+        };
+
+        // Attach a scroll event listener to the slider content
+        sliderContent.addEventListener('scroll', updateButtonStyles);
+
+        // Attach a touchend event listener to update button styles after a swipe
+        sliderContent.addEventListener('touchend', updateButtonStyles);
+
+        // Clean up the event listeners when the component unmounts
+        return () => {
+            sliderContent.removeEventListener('scroll', updateButtonStyles);
+            sliderContent.removeEventListener('touchend', updateButtonStyles);
+        };
+
+    }, []);
+    const data = {
+        labels: ['January', 'February', 'March', 'April', 'May'],
+        datasets: [
+            {
+                label: 'Line 1',
+                data: [userData.dailySummary[0].strengthGoals.pushUp, userData.dailySummary[1].strengthGoals.pushUp, userData.dailySummary[2].strengthGoals.pushUp, userData.dailySummary[3].strengthGoals.pushUp, userData.dailySummary[4].strengthGoals.pushUp, userData.dailySummary[5].strengthGoals.pushUp, userData.dailySummary[6].strengthGoals.pushUp],
+                borderColor: '#64ccc5',
+                borderWidth: 2,
+                fill: false
+            },
+            {
+                label: 'Line 2',
+                data: [userData.dailySummary[0].strengthGoals.sitUp, userData.dailySummary[1].strengthGoals.sitUp, userData.dailySummary[2].strengthGoals.sitUp, userData.dailySummary[3].strengthGoals.sitUp, userData.dailySummary[4].strengthGoals.sitUp, userData.dailySummary[5].strengthGoals.sitUp, userData.dailySummary[6].strengthGoals.sitUp],
+                borderColor: '#f99b32',
+                borderWidth: 2,
+                fill: false
+            },
+            {
+                label: 'Line 2',
+                data: [userData.dailySummary[0].strengthGoals.squat, userData.dailySummary[1].strengthGoals.squat, userData.dailySummary[2].strengthGoals.squat, userData.dailySummary[3].strengthGoals.squat, userData.dailySummary[4].strengthGoals.squat, userData.dailySummary[5].strengthGoals.squat, userData.dailySummary[6].strengthGoals.squat],
+                borderColor: '#ea3762',
+                borderWidth: 2,
+                fill: false
+            }
+        ]
+    };
+    const options = {
+        scales: {
+            x: {
+                display: false,  // Hide the x-axis
+            },
+            y: {
+                display: false,  // Hide the y-axis
+                min: 0
+            },
+        },
+        plugins: {
+            title: {
+                display: false  // Hide the title
+            },
+            legend: {
+                display: false  // Hide the legend
+            }
+        }, elements: {
+            point: {
+                pointRadius: 0   // Hide data points
+            }
+        }
+    }
+
+    const weightGraphData = {
+        labels: [userData.dailySummary[0].date.slice(-5), userData.dailySummary[1].date.slice(-5), userData.dailySummary[2].date.slice(-5), userData.dailySummary[3].date.slice(-5), userData.dailySummary[4].date.slice(-5)],
+        datasets: [
+            {
+                label: 'Line 1',
+                data: [userData.dailySummary[0].weight, userData.dailySummary[1].weight, userData.dailySummary[2].weight, userData.dailySummary[3].weight, userData.dailySummary[4].weight, userData.dailySummary[5].weight, userData.dailySummary[6].weight],
+                borderColor: '#64ccc5',
+                borderWidth: 2,
+                fill: false
+            },
+        ]
+    }
+    const weightGraphOption = {
+        scales: {
+            x: {
+                display: true,  // Hide the x-axis
+            },
+            y: {
+                display: true,  // Hide the y-axis
+                min: 0
+            },
+        },
+        plugins: {
+            title: {
+                display: false  // Hide the title
+            },
+            legend: {
+                display: false  // Hide the legend
+            }
+        }, elements: {
+            point: {
+                pointRadius: 3   // Hide data points
+            }
+        }
+    }
+
+    const stepsGraphData = {
+        labels: [userData.dailySummary[0].date.slice(-5), userData.dailySummary[1].date.slice(-5), userData.dailySummary[2].date.slice(-5), userData.dailySummary[3].date.slice(-5), userData.dailySummary[4].date.slice(-5)],
+        datasets: [
+            {
+                label: 'Line 1',
+                data: [userData.dailySummary[0].stepsTaken, userData.dailySummary[1].stepsTaken, userData.dailySummary[2].stepsTaken, userData.dailySummary[3].stepsTaken, userData.dailySummary[4].stepsTaken, userData.dailySummary[5].stepsTaken, userData.dailySummary[6].stepsTaken],
+                borderColor: '#64ccc5',
+                borderWidth: 2,
+                fill: false
+            },
+        ]
+    }
+
+    return (
+        <div id="weightStepSlider">
+            <div id='bottomArrowSlides'>
+                <button className="arrow left">&lt;</button>
+                <div id="newSlides">
+                    <div className="slide bottomSlider" id='weightSlide'>
+                        <div id="bottomSliderHeading">
+                            <h1>Weight</h1>
+                            <h3>last 5 days</h3>
+                        </div>
+                        <div>
+                            <Line data={weightGraphData} options={weightGraphOption} id="strengthGraph" style={{ width: "100%", height: "100%" }} />
+                        </div>
+                    </div>
+                    <div className="slide bottomSlider" id='stepsSlide'>
+                        <div id="bottomSliderHeading">
+                            <h1>Steps</h1>
+                            <h3>last 5 days</h3>
+                        </div>
+                        <div>
+                            <Bar data={stepsGraphData} options={weightGraphOption} />
+                        </div>
+                    </div>
+                    <div className="slide bottomSlider" id='strengthSlide'>
+                        <div id="strengthSlideTitle">
+                            <div>Squat</div>
+                            <div>PushUp</div>
+                            <div>SitUp</div>
+                        </div>
+                        <Line data={data} options={options} id="strengthGraph" style={{ width: "100%", height: "100%" }} />
+                    </div>
+                </div>
+                <button className="arrow right">&gt;</button>
+            </div>
+            <div id='bottomMovementDiv'>
+                <button className='moveButton ' id='strengthSlideButton'></button>
+                <button className='moveButton ' id='weightSlideButton'></button>
+                <button className='moveButton ' id='stepsSlideButton'></button>
+            </div>
+        </div>
+    );
+
+}
+
 
 function HomePage() {
     return (
@@ -577,6 +850,7 @@ function HomePage() {
             <Greeting />
             <TodayGoal />
             <StepsExercise />
+            <WeightStepsStrength />
             <Navbar />
         </div>
 
@@ -584,8 +858,6 @@ function HomePage() {
 }
 
 export default HomePage
-
-
 
 
 

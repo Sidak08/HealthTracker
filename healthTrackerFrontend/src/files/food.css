@@ -1,0 +1,114 @@
+:root {
+  --box-color: #164b60;
+  --border-1-light: #dafffb;
+  --border-2-dark: #1b6b93;
+  --text: #dafffb;
+  --background-color: #1b6b93;
+  --background-box: #083f5b;
+  --text: #dafffb;
+  --sub-text: #1b6b93;
+  --bright-sub-text: #6da3e0;
+}
+#foodPage {
+  background-color: #042536;
+}
+.foodSearchBar {
+  background-color: #164b60;
+  height: 40px;
+  margin: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.foodSlide {
+  background-color: #164b60;
+  border: none;
+}
+#calories {
+  margin-left: 30px;
+}
+#lowCarbSlide {
+  margin-right: 30px;
+}
+#foodQuickActionDiv {
+  display: flex;
+  margin: 0px 18px;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.quickAction {
+  height: 60px;
+  width: 110px;
+  background-color: #164b60;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.quickAction h3 {
+  font-size: 11px;
+}
+.foodSearchBar input {
+  background-color: #164b60;
+  border: none;
+  outline: none;
+  color: #dafffb;
+}
+.foodSearchBar input ::selection {
+  border: none;
+}
+div.quickAction:nth-child(1) {
+  border: 1px solid #f99b32;
+}
+div.quickAction:nth-child(2) {
+  border: 1px solid #bb65cb;
+}
+div.quickAction:nth-child(3) {
+  border: 1px solid #64ccc5;
+}
+.foodSearchBar > input:nth-child(2) :focus-visible {
+  border: none;
+}
+#foodHistory {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+.foodBoxLogDiv {
+  width: 92%;
+  background-color: var(--box-color);
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+.foodBoxLogDiv h1 {
+  font-size: 20px;
+  font-weight: 400;
+}
+.foodBoxLogDiv > div:nth-child(1) > div:nth-child(2) {
+  color: #dafffb;
+  font-weight: 300;
+}
+.foodBoxLogDiv button {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--background-box);
+  font-size: 35px;
+  color: #dafffb;
+  font-weight: 300;
+}
+.roundedTop {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.roundedBottom {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}

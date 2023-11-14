@@ -14,8 +14,8 @@
   justify-content: space-between;
   border-radius: 30px;
   background-color: #ffffff32;
-  backdrop-filter: blur(58px);
-  -webkit-backdrop-filter: blur(58px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   border: 2px solid black;
 }
 /* #addDiv {
@@ -42,57 +42,8 @@
 .sides {
   width: 40%;
   background-color: "#FFA69E";
-  margin-top: 20px;
   overflow-y: hidden;
-}
-.sides ul {
   display: flex;
-  justify-content: space-around;
-  overflow-y: hidden;
-}
-.sides ul li {
-  display: flex;
-  flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
-  text-decoration: none;
-  overflow-y: hidden;
-}
-.link {
-  color: rgb(218, 255, 251);
-  padding-top: 5px;
-  visibility: hidden;
-}
-
-.icon-container {
-  position: relative;
-  display: inline-block;
-}
-
-.icon-container .link {
-  position: absolute;
-  background-color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: none;
-  text-align: center;
-  line-height: 20px;
-  font-size: 12px;
-  color: #a62639;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s, transform 0.3s;
-}
-
-.icon-container:hover .link {
-  display: block;
-  opacity: 1;
-  transform: translateX(-50%) translateY(-25px);
-}
-
-.sides ul li img {
-  height: 30px;
-  width: 30px;
 }

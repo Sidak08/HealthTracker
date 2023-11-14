@@ -26,7 +26,6 @@ body {
   flex-direction: column;
   overflow-y: hidden;
   background-color: #022132;
-  height: 100vh;
 }
 #greeting {
   margin: 30px;
@@ -378,4 +377,100 @@ h3 {
 }
 #timeBottomDiv {
   margin-top: 14px;
+}
+#weightStepSlider {
+  margin-top: 20px;
+  margin-bottom: 100px;
+}
+#newSlides {
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.bottomSlider {
+  min-height: 300px;
+  min-width: 370px;
+  margin-bottom: 0px;
+}
+#bottomMovementDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 38%;
+  right: 17px;
+  background-color: #ffffff20;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 12px;
+}
+#bottomArrowSlides {
+  margin: 0px;
+  justify-content: center;
+  align-items: center;
+}
+#weightStepSlider {
+  position: relative;
+}
+#strengthSlide {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0px 0px 0px;
+}
+#strengthGraph {
+  width: 90% !important;
+  height: 80% !important;
+  margin-left: 10px;
+}
+#strengthSlideTitle {
+  display: flex;
+  width: 65%;
+  justify-content: space-evenly;
+}
+#strengthSlideTitle > div:nth-child(1) {
+  background-color: #ea3762;
+  padding: 7px;
+  border-radius: 3px;
+  color: #6d3b47;
+  border: 2px #6d3b47 solid;
+}
+#strengthSlideTitle > div:nth-child(2) {
+  background-color: #64ccc5;
+  padding: 7px;
+  border-radius: 3px;
+  color: #3c5e5b;
+  border: 2px #3c5e5b solid;
+}
+#strengthSlideTitle > div:nth-child(3) {
+  background-color: #f99b32;
+  padding: 7px;
+  border-radius: 3px;
+  color: #875014;
+  border: 2px solid #875014;
+}
+#weightSlide > div:nth-child(2) {
+  display: flex;
+  margin: 0px;
+  padding-left: 0px;
+}
+#strengthGraph {
+  margin-top: 35px;
+  height: 80% !important;
+}
+#bottomSliderHeading {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+#bottomSliderHeading > h1 {
+  font-size: 28px;
+}
+#bottomSliderHeading > h3 {
+  font-size: 14px;
+}
+#stepsSlide > div:nth-child(2) {
+  margin-top: 30px;
 }
